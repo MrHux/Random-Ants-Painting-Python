@@ -1,5 +1,6 @@
 from PIL import ImageTk
 from PIL import Image as ImagePil
+import numpy as np
 from numpy import random
 import tkinter
 from tkinter import *
@@ -25,7 +26,7 @@ class Fourmi:
     # fonction qui permet de déplacer une fourmi
     def deplacer(self):
         # calcul de la direction que prendra la fourmi
-        direction = random.randint(0, 8, 1, 'int')
+        direction = np.random.randint(0, 8, 1, 'int')
 
         if direction == 0:
             self.x += 0
@@ -60,18 +61,6 @@ class Fourmi:
 class MainWindow:
     # constructeur de la fenêtre
     def __init__(self, main):
-
-        # Création d'un canevas pour l'image
-        self.image_on_canvas = self.canvas.create_image(0, 0, anchor=NW, image=self.image)
-
-        # déclarer les threads
-        self.thread3 = ThreadDeplacerFourmis(self)
-        self.thread4 = ThreadDeplacerFourmis(self)
-        self.thread2 = ThreadDeplacerFourmis(self)
-        self.thread1 = ThreadDeplacerFourmis(self)
-
-        # thread chargé du rafraichissement de l'affichage
-        self.thread_update = ThreadUpdateCanvas(self)
 
         # set first image on canvas
         self.canvas = Canvas(main, width=width_canvas, height=height_canvas)
@@ -113,7 +102,20 @@ class MainWindow:
             colorB = (random.randint(0, 255) + (i * 100)) % 255
             color = (colorR, colorG, colorB)
             # déclaration d'une fourmi avec ses coordonnées x,y et sa couleur
-            self.fourmis.append(Fourmi(random.randint(0, width_image), random.randint(0, height_image), color))
+            self.fourmis.append(Fourmi(random.randint(0, width_image), np.random.randint(0, height_image), color))
+
+        # Création d'un canevas pour l'image
+        self.image_on_canvas = self.canvas.create_image(0, 0, anchor=NW, image=self.image)
+
+        # déclarer les threads
+        self.thread3 = ThreadDeplacerFourmis(self)
+        self.thread4 = ThreadDeplacerFourmis(self)
+        self.thread2 = ThreadDeplacerFourmis(self)
+        self.thread1 = ThreadDeplacerFourmis(self)
+
+        # thread chargé du rafraichissement de l'affichage
+        self.thread_update = ThreadUpdateCanvas(self)
+
 
         # on démarre les threads pour les fourmis
         self.thread1.start()
