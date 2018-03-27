@@ -3,7 +3,7 @@ A little program using Python libraries, that make random ants paint.
 
 The program use python3 libraries, it need the following libraries :
 
-- Pillow : https://github.com/yinpeng/pillow-pil
+- Pillow : https://pillow.readthedocs.io/en/latest/
 - numpy : http://www.numpy.org/
 - tkinter : https://wiki.python.org/moin/TkInter
 
